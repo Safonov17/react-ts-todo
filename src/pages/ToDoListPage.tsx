@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
 import { Form } from '../components/Form/Form'
 import { Header } from '../components/Header/Header'
 import { ToDoList } from '../components/ToDoList/ToDoList'
@@ -24,12 +25,17 @@ export const ToDoListPage = () => {
 			return item
 		})
 		setTodos(updatedToDos)
+		notifyByUpdate()
 	}
 
 	const deleteToDo = (toDoItem: Task) => {
 		const filteredToDos = todos.filter(item => item.id !== toDoItem.id)
 		setTodos(filteredToDos)
+		notifyByDelete()
 	}
+
+	const notifyByUpdate = () => toast('Обновлён статус задачи!')
+	const notifyByDelete = () => toast('Задача удалена!')
 
 	return (
 		<>
@@ -40,6 +46,18 @@ export const ToDoListPage = () => {
 					todos={todos}
 					updateToDo={updateToDo}
 					deleteToDo={deleteToDo}
+				/>
+				<ToastContainer
+					position='bottom-right'
+					autoClose={2500}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick={false}
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+					theme='colored'
 				/>
 			</div>
 		</>
